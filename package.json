@@ -1,0 +1,43 @@
+{
+  "name": "grunt-jsvalidate",
+  "description": "Validate JavaScript source.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/ariya/grunt-jsvalidate",
+  "author": {
+    "name": "Ariya Hidayat",
+    "email": "ariya.hidayat@gmail.com",
+    "url": "http://ariya.ofilabs.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ariya/grunt-jsvalidate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ariya/grunt-jsvalidate/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/ariya/grunt-jsvalidate/blob/master/LICENSE.BSD"
+    }
+  ],
+  "main": "grunt.js",
+  "bin": "bin/grunt-jsvalidate",
+  "engines": {
+    "node": "*"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {
+    "grunt": "~0.3.17",
+    "esprima": "~1.0.0"
+  },
+  "keywords": [
+    "gruntplugin",
+    "javascript",
+    "parser",
+    "validate",
+    "esprima"
+  ]
+}
