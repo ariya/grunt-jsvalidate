@@ -52,6 +52,10 @@ module.exports = function (grunt) {
 
         esprima = require('esprima');
         try {
+            // Skip shebang.
+            if (src[0] === '#' && src[1] === '!')
+                src = '//' + src.substr(2, src.length);
+
             syntax = esprima.parse(src, { tolerant: true });
             if (syntax.errors.length === 0) {
                 grunt.log.ok();
