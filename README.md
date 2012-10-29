@@ -29,7 +29,7 @@ First, install the [package](https://npmjs.org/package/grunt-jsvalidate):
 
 Modify your `grunt.js` file to have the following line somewhere:
 
-```
+```javascript
 grunt.loadNpmTasks('grunt-jsvalidate');
 ```
 
@@ -40,7 +40,7 @@ Set the files to be validated, as part of Grunt configuration via the
 new `jsvalidate` key. As an example, `initConfig` in your `grunt.js`
 might look like the following fragment:
 
-```
+```javascript
 grunt.initConfig({
   pkg: '<json:package.json>',
   jsvalidate: {
@@ -62,7 +62,7 @@ Whenever you want the validation task to run, just invoke it using:
 
 It is recommended to include the validation task in your default:
 
-```
+```javascript
 grunt.registerTask('default', 'jsvalidate lint test concat min');
 ```
 
