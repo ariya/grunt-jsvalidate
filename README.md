@@ -27,7 +27,7 @@ First, install the [package](https://npmjs.org/package/grunt-jsvalidate):
 
     npm install grunt-jsvalidate
 
-Modify your `grunt.js` file to have the following line somewhere:
+Modify your `Gruntfile.js` file to have the following line somewhere:
 
 ```javascript
 grunt.loadNpmTasks('grunt-jsvalidate');
@@ -37,16 +37,15 @@ If it has been installed correctly, running `grunt --help` should
 include `jsvalidate` in the list of available tasks.
 
 Set the files to be validated, as part of Grunt configuration via the
-new `jsvalidate` key. As an example, `initConfig` in your `grunt.js`
+new `jsvalidate` key. As an example, `initConfig` in your `Gruntfile.js`
 might look like the following fragment:
 
 ```javascript
 grunt.initConfig({
-  pkg: '<json:package.json>',
   jsvalidate: {
     files: ['*.js', 'lib/**/*.js', 'test/**/*.js']
   },
-  test: {
+  nodeunit: {
     files: ['test/**/*.js']
   }
 }
@@ -58,12 +57,14 @@ directory, the `lib` directory, and the `test` directory.
 
 Whenever you want the validation task to run, just invoke it using:
 
-    grunt jsvalidate
+```shell
+grunt jsvalidate
+```
 
 It is recommended to include the validation task in your default:
 
 ```javascript
-grunt.registerTask('default', 'jsvalidate lint test concat min');
+grunt.registerTask('default', ['jsvalidate', 'jshint', 'nodeunit', 'concat', 'uglify']);
 ```
 
 ## License

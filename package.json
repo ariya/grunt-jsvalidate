@@ -8,6 +8,13 @@
     "email": "ariya.hidayat@gmail.com",
     "url": "http://ariya.ofilabs.com"
   },
+  "contributors": [
+    {
+      "name": "James M. Greene",
+      "email": "james.m.greene@gmail.com",
+      "url": "http://jamesgreene.net/"
+    }
+  ],
   "repository": {
     "type": "git",
     "url": "git://github.com/ariya/grunt-jsvalidate.git"
@@ -21,19 +28,22 @@
       "url": "https://github.com/ariya/grunt-jsvalidate/blob/master/LICENSE.BSD"
     }
   ],
-  "main": "grunt.js",
+  "main": "Gruntfile.js",
   "bin": "bin/grunt-jsvalidate",
   "engines": {
-    "node": "*"
+    "node": ">= 0.8.0"
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt"
   },
   "dependencies": {
     "esprima": "~1.0.0"
   },
   "devDependencies": {
-    "grunt": "~0.3.17"
+    "grunt": "~0.4.0",
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-nodeunit": "~0.1.2",
+    "grunt-contrib-watch": "~0.3.1"
   },
   "keywords": [
     "gruntplugin",
