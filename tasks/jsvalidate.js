@@ -35,7 +35,7 @@ module.exports = function (grunt) {
 
         grunt.file.expandFiles(this.file.src).forEach(function (filepath) {
             grunt.verbose.write('jsvalidate ' + filepath);
-            grunt.helper('jsvalidate', grunt.file.read(filepath), options, globals, filepath);
+            jsvalidate(grunt.file.read(filepath), options, globals, filepath);
         });
 
         if (this.errorCount === 0) {
@@ -45,7 +45,7 @@ module.exports = function (grunt) {
         return (this.errorCount === 0);
     });
 
-    grunt.registerHelper('jsvalidate', function (src, options, globals, extraMsg) {
+    var jsvalidate = function (src, options, globals, extraMsg) {
         var esprima, syntax;
 
         grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
@@ -53,8 +53,9 @@ module.exports = function (grunt) {
         esprima = require('esprima');
         try {
             // Skip shebang.
-            if (src[0] === '#' && src[1] === '!')
+            if (src[0] === '#' && src[1] === '!') {
                 src = '//' + src.substr(2, src.length);
+            }
 
             syntax = esprima.parse(src, { tolerant: true });
             if (syntax.errors.length === 0) {
@@ -71,6 +72,5 @@ module.exports = function (grunt) {
             grunt.log.error(e.message);
             grunt.fail.errorcount++;
         }
-    });
-
+    };
 };

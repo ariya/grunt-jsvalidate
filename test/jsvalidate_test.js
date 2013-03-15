@@ -29,6 +29,7 @@ exports['jsvalidate'] = {
   },
   'helper': function(test) {
     // tests here
+    test.ok(true);
     test.done();
   }
 };
