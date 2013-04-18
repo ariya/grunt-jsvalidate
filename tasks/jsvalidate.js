@@ -33,7 +33,7 @@ module.exports = function (grunt) {
 
         // FIXME: get options and globals from the project's grunt file.
 
-        grunt.file.expandFiles(this.file.src).forEach(function (filepath) {
+        grunt.file.expand(this.files[0].src).forEach(function (filepath) {
             grunt.verbose.write('jsvalidate ' + filepath);
             jsvalidate(grunt.file.read(filepath), options, globals, filepath);
         });
