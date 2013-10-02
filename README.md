@@ -43,6 +43,11 @@ might look like the following fragment:
 ```javascript
 grunt.initConfig({
   jsvalidate: {
+    options:{
+      globals: {},
+      esprimaOptions: {},
+      verbose: false
+    },
     files: ['*.js', 'lib/**/*.js', 'test/**/*.js']
   },
   nodeunit: {
