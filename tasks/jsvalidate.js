@@ -27,47 +27,64 @@
 
 module.exports = function (grunt) {
     'use strict';
+    var esprima = require('esprima');
+    var params;
+
 
     grunt.registerMultiTask('jsvalidate', 'Validate JavaScript source.', function () {
-        var options = {}, globals = {};
+        params = this.options({
+            globals: {},
+            esprimaOptions: {},
+            verbose: true
+        });
 
-        // FIXME: get options and globals from the project's grunt file.
-
-        grunt.file.expand(this.files[0].src).forEach(function (filepath) {
+        this.filesSrc.forEach(function (filepath) {
             grunt.verbose.write('jsvalidate ' + filepath);
-            jsvalidate(grunt.file.read(filepath), options, globals, filepath);
+            jsvalidate(grunt.file.read(filepath), params.esprimaOptions, params.globals, filepath);
         });
 
         if (this.errorCount === 0) {
-            grunt.log.writeln('Everything is valid.');
+            grunt.log.writeln(this.filesSrc.length + ' files are valid.');
+        }
+
+        if (this.errorCount > 0) {
+            grunt.log.writeln('Encountered ' + this.errorCount + ' errors.');
         }
 
         return (this.errorCount === 0);
     });
 
     var jsvalidate = function (src, options, globals, extraMsg) {
-        var esprima, syntax;
+        var syntax;
 
-        grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
+        if (params.verbose) {
+            grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
+        }
 
-        esprima = require('esprima');
         try {
-            // Skip shebang.
-            if (src[0] === '#' && src[1] === '!') {
-                src = '//' + src.substr(2, src.length);
-            }
 
-            syntax = esprima.parse(src, { tolerant: true });
+            syntax = esprima.parse(src, {
+                tolerant: true
+            });
             if (syntax.errors.length === 0) {
-                grunt.log.ok();
+                if (params.verbose) {
+                    grunt.log.ok();
+                }
             } else {
+
+                if (!params.verbose) {
+                    grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
+                }
+
                 grunt.log.write('\n');
                 syntax.errors.forEach(function (e) {
                     grunt.log.error(e.message);
                 });
-                return;
             }
         } catch (e) {
+            if (!params.verbose) {
+                grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
+            }
             grunt.log.write('\n');
             grunt.log.error(e.message);
             grunt.fail.errorcount++;
