@@ -27,7 +27,9 @@
 
 module.exports = function (grunt) {
     'use strict';
+    var esprima = require('esprima');
     var params;
+
 
     grunt.registerMultiTask('jsvalidate', 'Validate JavaScript source.', function () {
         params = this.options({
@@ -36,13 +38,13 @@ module.exports = function (grunt) {
             verbose: true
         });
 
-        grunt.file.expand(this.files[0].src).forEach(function (filepath) {
+        this.filesSrc.forEach(function (filepath) {
             grunt.verbose.write('jsvalidate ' + filepath);
             jsvalidate(grunt.file.read(filepath), params.esprimaOptions, params.globals, filepath);
         });
 
         if (this.errorCount === 0) {
-            grunt.log.writeln(this.files[0].src.length + ' files are valid.');
+            grunt.log.writeln(this.filesSrc.length + ' files are valid.');
         }
 
         if (this.errorCount > 0) {
@@ -53,18 +55,13 @@ module.exports = function (grunt) {
     });
 
     var jsvalidate = function (src, options, globals, extraMsg) {
-        var esprima, syntax;
+        var syntax;
 
         if (params.verbose) {
             grunt.log.write('Validating' + (extraMsg ? ' ' + extraMsg : '') + '  ');
         }
 
-        esprima = require('esprima');
         try {
-            // Skip shebang.
-            if (src[0] === '#' && src[1] === '!') {
-                src = '//' + src.substr(2, src.length);
-            }
 
             syntax = esprima.parse(src, {
                 tolerant: true

@@ -48,7 +48,11 @@ grunt.initConfig({
       esprimaOptions: {},
       verbose: false
     },
-    files: ['*.js', 'lib/**/*.js', 'test/**/*.js']
+    targetName:{
+      files:{
+        src:['<%=jshint.all%>']
+      }
+    }
   },
   nodeunit: {
     files: ['test/**/*.js']
